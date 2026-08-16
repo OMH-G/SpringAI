@@ -1,6 +1,7 @@
 package com.example.springai.Controller;
 
 import com.example.springai.Service.ChatModelService;
+import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,5 +27,12 @@ public class AiController {
 //        System.out.println(chatResponse);
         System.out.println(chatResponse.getMetadata().getModel());
         System.out.println(chatResponse.getResult().getOutput().getText());
+    }
+
+    @GetMapping("/chat/v2")
+    public void chatWithSystem(@RequestParam String sysmsg,@RequestParam String usrmsg){
+        System.out.println(chatModelService.systemMessageModel(sysmsg,usrmsg).getResult().getOutput().getText());
+
+
     }
 }
