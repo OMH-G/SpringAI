@@ -1,6 +1,7 @@
 package com.example.springai.Service;
 
 import org.jspecify.annotations.Nullable;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
@@ -10,6 +11,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.ollama.autoconfigure.OllamaChatProperties;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.api.OllamaChatOptions;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,12 @@ public class ChatModelService {
     public ChatModelService(ChatModel model){
         this.chatModel=model;
     }
+
+    @Bean
+    public ChatClient chatClient(ChatModel chatModel){
+        return ChatClient.builder(chatModel).build();
+    }
+
 
     public ChatResponse callChatModel(String message){
         Prompt prompt= new Prompt(message);
@@ -38,4 +46,5 @@ public class ChatModelService {
 
         return chatModel.call(prompt);
     }
+
 }
